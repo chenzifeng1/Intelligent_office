@@ -1,7 +1,6 @@
 package com.xueqi.Intelligent_office.model;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 /**
  * boss:部门主管
@@ -10,7 +9,8 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "department")
 public class Department {
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
 
     private String name;

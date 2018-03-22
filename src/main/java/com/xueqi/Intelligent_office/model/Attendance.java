@@ -1,8 +1,7 @@
 package com.xueqi.Intelligent_office.model;
 
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 /**
  *  date :员工签到成功的时间戳
@@ -16,6 +15,8 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "attendance")
 public class Attendance {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
 
     private int worker_id;
