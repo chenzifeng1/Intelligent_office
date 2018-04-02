@@ -7,11 +7,13 @@ import com.xueqi.Intelligent_office.service.serviceinfo.FDService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class DepartmentService implements FDService {
 
     @Autowired
-    DepartmentRepository departmentRepository;
+    private DepartmentRepository departmentRepository;
 
     public Object create(String name,String boss,int num){
         Department department = new Department(name,boss,num);
@@ -19,7 +21,7 @@ public class DepartmentService implements FDService {
     }
 
     public boolean departmentIsExist(String name){
-        if(departmentRepository.findByName(name)!=null){
+        if(departmentRepository.findByName(name).isPresent()){
             return true;
         }
         else
@@ -28,9 +30,12 @@ public class DepartmentService implements FDService {
 
     @Override
     public Object delete(int id) {
-        Department department = departmentRepository.findById(id).get();
-        departmentRepository.delete(department);
-        return new JsonMessage(1,"success");
+        Optional<Department> department = departmentRepository.findById(id);
+        if (department.isPresent()){
+            departmentRepository.delete(department.get());
+            return new JsonMessage(1,"success");
+        }else
+            return new JsonMessage(-1,"not found");
     }
 
     @Override
@@ -40,7 +45,16 @@ public class DepartmentService implements FDService {
 
     @Override
     public Object findOne(int id) {
-        return departmentRepository.findById(id).get();
+        if (departmentRepository.findById(id).isPresent())
+            return departmentRepository.findById(id).get();
+        else
+            return new JsonMessage(-1,"not found");
     }
+
+    @Override
+    public boolean isPresent(int id) {
+        return departmentRepository.findById(id).isPresent();
+    }
+
 
 }

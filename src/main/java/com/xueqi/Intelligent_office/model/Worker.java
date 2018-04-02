@@ -65,4 +65,11 @@ public class Worker {
     public void setBirthday(String birthday) {
         this.birthday = birthday;
     }
+
+    public void print(){
+        System.out.println("Name : " + this.getName()+"\n"
+        +"Head ：" + this.getHead()+"\n"
+        +"Birthday : " + this.getBirthday()+"\n"
+        +"department_id : "+ this.getDepartment_id());
+    }
 }
