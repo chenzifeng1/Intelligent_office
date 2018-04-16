@@ -56,5 +56,14 @@ public class DepartmentService implements FDService {
         return departmentRepository.findById(id).isPresent();
     }
 
+    @Override
+    public Object save(Object o) {
+        Department department = (Department) o;
+        if (this.isPresent(department.getId()))
+            return departmentRepository.save(department);
+        else
+            return null;
+    }
+
 
 }

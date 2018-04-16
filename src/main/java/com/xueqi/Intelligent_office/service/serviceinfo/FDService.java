@@ -5,4 +5,5 @@ public interface FDService {
     Object findAll();
     Object findOne(int id);
     boolean isPresent(int id);
+    Object save(Object o);
 }

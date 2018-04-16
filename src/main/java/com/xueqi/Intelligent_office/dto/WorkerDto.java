@@ -1,25 +1,17 @@
-package com.xueqi.Intelligent_office.model;
+package com.xueqi.Intelligent_office.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.xueqi.Intelligent_office.model.Worker;
 import io.swagger.annotations.ApiModel;
-import springfox.documentation.annotations.ApiIgnore;
 
-import javax.persistence.*;
-
-@Entity
-@Table(name = "worker")
-public class Worker {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
-
+@ApiModel(value = "worker")
+public class WorkerDto {
     private String name;
     private String tele;
     private int department_id;
     private String head;
     private String birthday;
 
-    public Worker(String name, String tele, int department_id, String head, String birthday) {
+    public WorkerDto(String name, String tele, int department_id, String head, String birthday) {
         this.name = name;
         this.tele = tele;
         this.department_id = department_id;
@@ -27,7 +19,15 @@ public class Worker {
         this.birthday = birthday;
     }
 
-    public Worker() {
+    public WorkerDto(Worker worker) {
+        this.name = worker.getName();
+        this.tele = worker.getTele();
+        this.department_id = worker.getDepartment_id();
+        this.head = worker.getHead();
+        this.birthday =worker.getBirthday();
+    }
+
+    public WorkerDto() {
     }
 
     public String getName() {
@@ -68,16 +68,5 @@ public class Worker {
 
     public void setBirthday(String birthday) {
         this.birthday = birthday;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void print(){
-        System.out.println("Name : " + this.getName()+"\n"
-        +"Head ：" + this.getHead()+"\n"
-        +"Birthday : " + this.getBirthday()+"\n"
-        +"department_id : "+ this.getDepartment_id());
     }
 }

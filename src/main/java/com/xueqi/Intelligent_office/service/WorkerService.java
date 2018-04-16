@@ -26,8 +26,10 @@ public class WorkerService implements FDService {
     protected final Logger logger = LoggerFactory.getLogger(this.getClass());
     protected final ObjectMapper objectMapper = new ObjectMapper();
 
-    public Object create(String name,String tele,int department_id,String head, String birthday) {
+    public Object create(String name,String tele,Integer department_id,String head, String birthday) {
+       logger.info(" WorkerService.department_id :"+department_id);
         if (departmentRepository.findById(department_id).isPresent()) {
+            logger.info("部门已找到:"+department_id);
             Worker worker = new Worker(name, tele, department_id, head, birthday);
             return workerRepository.save(worker);
         }else
@@ -63,6 +65,15 @@ public class WorkerService implements FDService {
     @Override
     public boolean isPresent(int id) {
         return workerRepository.findById(id).isPresent();
+    }
+
+    @Override
+    public Object save(Object o) {
+        Worker worker = (Worker) o;
+        if (this.isPresent(worker.getId()))
+            return workerRepository.save(worker);
+        else
+            return null;
     }
 
 //    public Object checkSign(int worker_id){

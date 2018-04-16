@@ -19,25 +19,27 @@ public class Attendance {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
 
-    private int worker_id;
+    private int workerId;
     private long date;
     private int state;
+    private int departmentId;
 
-    public Attendance(int worker_id,int state) {
-        this.worker_id = worker_id;
+    public Attendance(int workerId, int state, int departmentId) {
+        this.workerId = workerId;
         this.date = System.currentTimeMillis();
         this.state = state;
+        this.departmentId = departmentId;
     }
 
     public Attendance() {
     }
 
-    public int getWorker_id() {
-        return worker_id;
+    public int getWorkerId() {
+        return workerId;
     }
 
-    public void setWorker_id(int worker_id) {
-        this.worker_id = worker_id;
+    public void setWorkerId(int workerId) {
+        this.workerId = workerId;
     }
 
     public long getDate() {
@@ -54,5 +56,17 @@ public class Attendance {
 
     public void setState(int state) {
         this.state = state;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public int getDepartmentId() {
+        return departmentId;
+    }
+
+    public void setDepartmentId(int departmentId) {
+        this.departmentId = departmentId;
     }
 }

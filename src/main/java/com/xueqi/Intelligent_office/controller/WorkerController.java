@@ -1,59 +1,63 @@
 package com.xueqi.Intelligent_office.controller;
 
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.xueqi.Intelligent_office.dto.JsonMessage;
+import com.xueqi.Intelligent_office.dto.WorkerDto;
+import com.xueqi.Intelligent_office.model.Worker;
 import com.xueqi.Intelligent_office.service.DepartmentService;
 import com.xueqi.Intelligent_office.service.WorkerService;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/worker")
-public class WorkerController  {
+public class WorkerController {
 
     @Autowired
     private WorkerService workerService;
     @Autowired
     private DepartmentService departmentService;
 
-    @ApiOperation(value = "创建新的员工",notes = "")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "name",value = "员工名称",required = true,dataType = "String"),
-            @ApiImplicitParam(name = "tele",value = "员工电话",required = true,dataType = "String"),
-            @ApiImplicitParam(name = "department_id",value = "部门id",required = true,dataType = "int"),
-            @ApiImplicitParam(name = "head",value = "员工头像",required = true,dataType = "String"),
-            @ApiImplicitParam(name = "birthday",value = "员工生日",required = true,dataType = "String")
-    })
+    protected final Logger logger = LoggerFactory.getLogger(this.getClass());
+    protected final ObjectMapper objectMapper = new ObjectMapper();
+
+    @ApiOperation(value = "创建新的员工", notes = "")
     @PostMapping("/create")
-    public Object create(String name,String tele,int department_id,String head, String birthday){
-        if (!departmentService.isPresent(department_id)){
-            return new JsonMessage(-1,"no department");
+    public Object create(@RequestBody @ApiParam(name = "worker", value = "department") WorkerDto worker/*String name,String tele,Integer department_id,String head, String birthday*/) {
+        try {
+            logger.info("WorkerController.name:" + worker.getName());
+            logger.info("WorkerController.department_id :" + worker.getDepartment_id());
+        } catch (Exception e) {
+            logger.info("department_id is null ???????");
+            e.printStackTrace();
         }
-        return workerService.create(name,tele,department_id,head,birthday);
+        logger.info("开始创建员工");
+        return workerService.create(
+                worker.getName(),
+                worker.getTele(),
+                worker.getDepartment_id(),
+                worker.getHead(),
+                worker.getBirthday()
+        );
     }
 
-    @ApiOperation(value = "查找员工",notes = "")
-    @ApiImplicitParam(name = "id",value = "员工id",required = true,dataType = "int")
+    @ApiOperation(value = "查找员工", notes = "")
+    @ApiImplicitParam(name = "id", value = "员工id", required = true, paramType = "query", dataType = "int")
     @GetMapping("/findOne")
-    public Object findOne(int id){
+    public Object findOne(int id) {
         return workerService.findOne(id);
     }
 
-    @ApiOperation(value = "删除员工",notes = "")
-    @ApiImplicitParam(name = "id",value = "员工id",required = true,dataType = "int")
+    @ApiOperation(value = "删除员工", notes = "")
+    @ApiImplicitParam(name = "id", value = "员工id", required = true, paramType = "query", dataType = "int")
     @PostMapping("/delete")
-    public Object delete(int id){
-       return workerService.delete(id);
+    public Object delete(int id) {
+        return workerService.delete(id);
     }
-//    @GetMapping("/sign")
-//    public Object sign(int worker_id){
-//        return workerService.checkSign(worker_id);
-//    }
+
 }
 

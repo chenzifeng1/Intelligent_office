@@ -7,5 +7,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface AttendanceRepository extends CrudRepository<Attendance,Integer> {
 
-   // Iterable<Attendance> findFirstByWorker_idOrderByDateDesc(int worker_id);
+  // Attendance findFirstByWorker_id(int worker_id);
+   Iterable<Attendance> findAllByDepartmentId(int departmentId);
+   Iterable<Attendance> findAllByWorkerId(int workerId);
 }

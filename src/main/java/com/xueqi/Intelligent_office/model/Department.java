@@ -1,5 +1,7 @@
 package com.xueqi.Intelligent_office.model;
 
+import io.swagger.annotations.ApiModel;
+
 import javax.persistence.*;
 
 /**
@@ -8,6 +10,7 @@ import javax.persistence.*;
  * */
 @Entity
 @Table(name = "department")
+@ApiModel(value = "department")
 public class Department {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -48,5 +51,9 @@ public class Department {
 
     public void setNum(int num) {
         this.num = num;
+    }
+
+    public int getId() {
+        return id;
     }
 }
