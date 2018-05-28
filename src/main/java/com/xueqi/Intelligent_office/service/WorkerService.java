@@ -35,6 +35,11 @@ public class WorkerService implements FDService {
         }else
             return new JsonMessage(-1,"the department is not found ");
     }
+
+    public Object findByName(String name){
+        return workerRepository.findFirstByName(name);
+    }
+
     @Override
     public Object delete(int id) {
        Optional<Worker> worker = workerRepository.findById(id);

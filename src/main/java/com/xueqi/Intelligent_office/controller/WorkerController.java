@@ -27,7 +27,7 @@ public class WorkerController {
 
     @ApiOperation(value = "创建新的员工", notes = "")
     @PostMapping("/create")
-    public Object create(@RequestBody @ApiParam(name = "worker", value = "department") WorkerDto worker/*String name,String tele,Integer department_id,String head, String birthday*/) {
+    public Object create(@RequestBody @ApiParam(name = "worker", value = "department",required = true) WorkerDto worker/*String name,String tele,Integer department_id,String head, String birthday*/) {
         try {
             logger.info("WorkerController.name:" + worker.getName());
             logger.info("WorkerController.department_id :" + worker.getDepartment_id());
@@ -59,5 +59,17 @@ public class WorkerController {
         return workerService.delete(id);
     }
 
+    @ApiOperation(value = "全体员工信息",notes = "")
+    @GetMapping("/findAll")
+    public Object findAll(){
+        return workerService.findAll();
+    }
+
+    @ApiOperation(value = "根据姓名查找员工",notes = "")
+    @ApiImplicitParam(name = "name" ,value = "员工姓名",required = true,dataType = "String")
+    @GetMapping("/findByName")
+    public Object findByName(String name){
+        return workerService.findByName(name);
+    }
 }
 

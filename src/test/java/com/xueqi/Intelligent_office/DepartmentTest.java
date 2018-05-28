@@ -12,12 +12,12 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 @SpringBootTest
 public class DepartmentTest {
-    @Autowired
-    private DepartmentRepository repository;
-
-    @Test
-    public void test(){
-        Department d = new Department("技术部","陈子枫",5000);
-        repository.save(d);
-    }
+//    @Autowired
+//    private DepartmentRepository repository;
+//
+//    @Test
+//    public void test(){
+//        Department d = new Department("技术部","陈子枫",5000);
+//        repository.save(d);
+//    }
 }

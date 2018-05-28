@@ -74,6 +74,19 @@ public class AttendanceService implements FDService {
             return new JsonMessage(-1, "workId not find");
     }
 
+    public Object signByName(String name,int state) {
+            try {
+                Worker worker = workerRepository.findFirstByName(name);
+                Attendance attendance = new Attendance(worker.getId(),state,worker.getDepartment_id());
+                return attendanceRepository.save(attendance);
+            }catch (NullPointerException no){
+                no.getCause();
+                return new JsonMessage(-1,"the worker not find");
+            }
+
+
+    }
+
     @Override
     public Object delete(int id) {
         Attendance attendance = attendanceRepository.findById(id).get();

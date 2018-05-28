@@ -11,11 +11,11 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 @SpringBootTest
 public class WorkerTest {
-    @Autowired
-    WorkerRepository workerRepository;
-
-    @Test
-    public void create(){
-        workerRepository.save(new Worker("Test", "17806275048",1,"c://czf.jpg","10-02"));
-    }
+//    @Autowired
+//    WorkerRepository workerRepository;
+//
+//    @Test
+//    public void create(){
+//        workerRepository.save(new Worker("Test", "17806275048",1,"c://czf.jpg","10-02"));
+//    }
 }

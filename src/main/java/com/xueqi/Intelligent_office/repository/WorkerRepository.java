@@ -9,4 +9,5 @@ import java.util.Optional;
 public interface WorkerRepository extends CrudRepository<Worker,Integer> {
     Iterable<Worker> findAllByDepartment_id = null;
     Iterable<Worker> findAllByName = null;
+    Worker findFirstByName(String name);
 }

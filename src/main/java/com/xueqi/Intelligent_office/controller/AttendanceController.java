@@ -45,4 +45,14 @@ public class AttendanceController {
     public Object checkWorker(Integer workId){
         return attendanceService.workerCheck(workId);
     }
+
+    @PostMapping("/signByName")
+    @ApiOperation(value = "根据员工的姓名签到",notes = "")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "name",value = "员工姓名",required = true,dataType = "String",paramType = "query"),
+            @ApiImplicitParam(name = "state",value = "int",required = true,dataType = "Integer",paramType = "query")
+    })
+    public Object signByName(String name,Integer state){
+        return attendanceService.signByName(name,state);
+    }
 }
