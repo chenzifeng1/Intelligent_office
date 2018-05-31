@@ -14,12 +14,15 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import springfox.documentation.spring.web.json.Json;
 
+import java.text.SimpleDateFormat;
 import java.util.Optional;
+import java.util.logging.SimpleFormatter;
 
 @Service
 public class AttendanceService implements FDService {
+
+    final static long REPEAT_CHECK = 7200000;//两个小时的时差 7200000ms
 
     @Autowired
     private AttendanceRepository attendanceRepository;
@@ -34,6 +37,15 @@ public class AttendanceService implements FDService {
     public Object create(int worker_id, int state) {
         if (workerRepository.findById(worker_id).isPresent()) {
             Worker worker = workerRepository.findById(worker_id).get();
+            Attendance repeat = attendanceRepository.findFirstByWorkerIdOrderByDateDesc(worker_id);
+            logger.info("date:"+repeat.getDate());
+            logger.info("state:"+repeat.getState());
+            if (!isRepeatCheckin(repeat,state)){
+                return new JsonMessage(-1,"repeat check-in:"
+                        + new SimpleDateFormat("yyyy-MM-dd hh:mm:ss")
+                        .format( repeat.getDate())
+                       );
+            }
             Attendance attendance = new Attendance(
                     worker_id,//签到员工id
                     state,//签到状态
@@ -84,6 +96,24 @@ public class AttendanceService implements FDService {
                 return new JsonMessage(-1,"the worker not find");
             }
 
+
+    }
+
+    public boolean isRepeatCheckin(Attendance attendance,int state){
+        try {
+            long now = System.currentTimeMillis();
+            //小于两个小时，则说明可能重复签到
+            if (now-attendance.getDate()<REPEAT_CHECK&&attendance.getState()==state){
+                return false;
+            }
+            return true;
+        }catch (NullPointerException npe){
+            npe.getCause();
+            return false;
+        }catch (Exception e){
+            e.getCause();
+            return false;
+        }
 
     }
 

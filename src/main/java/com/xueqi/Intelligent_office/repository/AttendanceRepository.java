@@ -10,4 +10,5 @@ public interface AttendanceRepository extends CrudRepository<Attendance,Integer>
   // Attendance findFirstByWorker_id(int worker_id);
    Iterable<Attendance> findAllByDepartmentId(int departmentId);
    Iterable<Attendance> findAllByWorkerId(int workerId);
+   Attendance findFirstByWorkerIdOrderByDateDesc(int workerid);
 }
