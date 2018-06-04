@@ -66,7 +66,7 @@ public class WorkerController {
     }
 
     @ApiOperation(value = "根据姓名查找员工",notes = "")
-    @ApiImplicitParam(name = "name" ,value = "员工姓名",required = true,dataType = "String",paramType = "query")
+    @ApiImplicitParam(name = "name" ,value = "员工姓名",required = true,paramType = "query",dataType = "String")
     @GetMapping("/findByName")
     public Object findByName(String name){
         return workerService.findByName(name);

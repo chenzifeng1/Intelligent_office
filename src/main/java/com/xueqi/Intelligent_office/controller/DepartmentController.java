@@ -24,9 +24,9 @@ public class DepartmentController {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "name", value = "部门名称", required = true, paramType =  "query",dataType = "String"),
             @ApiImplicitParam(name = "boss", value = "部门主管", required = true,paramType =  "query", dataType = "String"),
-            @ApiImplicitParam(name = "num", value = "部门人数", required = true,paramType =  "query", dataType = "int"),
+            @ApiImplicitParam(name = "num", value = "部门人数", required = true,paramType =  "query", dataType = "Integer"),
     })
-    public Object create(String name, String boss, int num) {
+    public Object create(String name, String boss, Integer num) {
         if (num < 0)
             return new JsonMessage(-1, "information is error");
         if (departmentService.departmentIsExist(name))
@@ -37,10 +37,10 @@ public class DepartmentController {
     @PostMapping("/updateBoss")
     @ApiOperation(value = "修改部门主管", notes = "")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "departmentId", value = "部门id", required = true, paramType =  "query",dataType = "int"),
+            @ApiImplicitParam(name = "departmentId", value = "部门id", required = true, paramType =  "query",dataType = "Integer"),
             @ApiImplicitParam(name = "boss", value = "部门主管", required = true,paramType =  "query", dataType = "String")
     })
-    public Object updateBoss(int departmentId, String boss) {
+    public Object updateBoss(Integer departmentId, String boss) {
         if (departmentService.isPresent(departmentId)) {
             Department department = (Department) departmentService.findOne(departmentId);
             department.setBoss(boss);

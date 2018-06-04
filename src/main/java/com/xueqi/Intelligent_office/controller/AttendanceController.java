@@ -50,7 +50,7 @@ public class AttendanceController {
     @ApiOperation(value = "根据员工的姓名签到",notes = "")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "name",value = "员工姓名",required = true,dataType = "String",paramType = "query"),
-            @ApiImplicitParam(name = "state",value = "int",required = true,dataType = "Integer",paramType = "query")
+            @ApiImplicitParam(name = "state",value = "状态",required = true,dataType = "Integer",paramType = "query")
     })
     public Object signByName(String name,Integer state){
         return attendanceService.signByName(name,state);
