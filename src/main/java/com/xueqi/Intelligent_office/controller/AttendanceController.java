@@ -34,8 +34,8 @@ public class AttendanceController {
     }
     @GetMapping("/checkDepartment")
     @ApiOperation(value = "查看部门签到记录", notes = "暂时无法按时间查找")
-    @ApiImplicitParam(name = "departmentId", value = "部门id", required = true, paramType =  "query",dataType = "int")
-    public Object checkDepartment(int departmentId) {
+    @ApiImplicitParam(name = "departmentId", value = "部门id", required = true, paramType =  "query",dataType = "Integer")
+    public Object checkDepartment(Integer departmentId) {
         return attendanceService.departmentCheck(departmentId);
     }
 
@@ -49,7 +49,7 @@ public class AttendanceController {
     @PostMapping("/signByName")
     @ApiOperation(value = "根据员工的姓名签到",notes = "")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "name",value = "员工姓名",required = true,dataType = "String",paramType = "query"),
+            @ApiImplicitParam(name = "name",value = "员工姓名",required = true,dataType = "string",paramType = "query"),
             @ApiImplicitParam(name = "state",value = "状态",required = true,dataType = "Integer",paramType = "query")
     })
     public Object signByName(String name,Integer state){

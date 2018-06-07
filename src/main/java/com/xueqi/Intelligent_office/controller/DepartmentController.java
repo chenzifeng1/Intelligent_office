@@ -22,9 +22,9 @@ public class DepartmentController {
     @PostMapping("/create")
     @ApiOperation(value = "创建新的部门", notes = "")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "name", value = "部门名称", required = true, paramType =  "query",dataType = "String"),
-            @ApiImplicitParam(name = "boss", value = "部门主管", required = true,paramType =  "query", dataType = "String"),
-            @ApiImplicitParam(name = "num", value = "部门人数", required = true,paramType =  "query", dataType = "Integer"),
+            @ApiImplicitParam(name = "name", value = "部门名称", required = true, paramType =  "query",dataType = "string"),
+            @ApiImplicitParam(name = "boss", value = "部门主管", required = true,paramType =  "query", dataType = "string"),
+            @ApiImplicitParam(name = "num", value = "部门人数", required = true,paramType =  "query", dataType = "integer"),
     })
     public Object create(String name, String boss, Integer num) {
         if (num < 0)
@@ -37,8 +37,8 @@ public class DepartmentController {
     @PostMapping("/updateBoss")
     @ApiOperation(value = "修改部门主管", notes = "")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "departmentId", value = "部门id", required = true, paramType =  "query",dataType = "Integer"),
-            @ApiImplicitParam(name = "boss", value = "部门主管", required = true,paramType =  "query", dataType = "String")
+            @ApiImplicitParam(name = "departmentId", value = "部门id", required = true, paramType =  "query",dataType = "integer"),
+            @ApiImplicitParam(name = "boss", value = "部门主管", required = true,paramType =  "query", dataType = "string")
     })
     public Object updateBoss(Integer departmentId, String boss) {
         if (departmentService.isPresent(departmentId)) {
@@ -52,8 +52,8 @@ public class DepartmentController {
     @PostMapping("/updateNum")
     @ApiOperation(value = "修改部门人数", notes = "")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "departmentId", value = "部门id", required = true, paramType =  "query",dataType = "int"),
-            @ApiImplicitParam(name = "num", value = "部门人数", required = true,paramType =  "query", dataType = "int")
+            @ApiImplicitParam(name = "departmentId", value = "部门id", required = true, paramType =  "query",dataType = "integer"),
+            @ApiImplicitParam(name = "num", value = "部门人数", required = true,paramType =  "query", dataType = "integer")
     })
     public Object updateNum(int departmentId, int num) {
         if (departmentService.isPresent(departmentId)) {
@@ -65,6 +65,13 @@ public class DepartmentController {
                 return new JsonMessage(-1,"num is wrong");
         }
         return new JsonMessage(-1,"id not find");
+    }
+
+    @GetMapping("/findOne")
+    @ApiOperation(value = "获取部门信息", notes = "")
+    @ApiImplicitParam(name = "departmentId", value = "部门id", required = true, paramType =  "query",dataType = "integer")
+    public Object findDepartment(int departmentId){
+        return departmentService.findOne(departmentId);
     }
 
 }

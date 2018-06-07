@@ -46,16 +46,16 @@ public class WorkerController {
     }
 
     @ApiOperation(value = "查找员工", notes = "")
-    @ApiImplicitParam(name = "id", value = "员工id", required = true, paramType = "query", dataType = "int")
+    @ApiImplicitParam(name = "id", value = "员工id", required = true, paramType = "query", dataType = "integer")
     @GetMapping("/findOne")
-    public Object findOne(int id) {
+    public Object findOne(Integer id) {
         return workerService.findOne(id);
     }
 
     @ApiOperation(value = "删除员工", notes = "")
-    @ApiImplicitParam(name = "id", value = "员工id", required = true, paramType = "query", dataType = "int")
+    @ApiImplicitParam(name = "id", value = "员工id", required = true, paramType = "query", dataType = "integer")
     @PostMapping("/delete")
-    public Object delete(int id) {
+    public Object delete(Integer id) {
         return workerService.delete(id);
     }
 
@@ -66,7 +66,7 @@ public class WorkerController {
     }
 
     @ApiOperation(value = "根据姓名查找员工",notes = "")
-    @ApiImplicitParam(name = "name" ,value = "员工姓名",required = true,paramType = "query",dataType = "String")
+    @ApiImplicitParam(name = "name" ,value = "员工姓名",required = true,paramType = "query",dataType = "string")
     @GetMapping("/findByName")
     public Object findByName(String name){
         return workerService.findByName(name);
