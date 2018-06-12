@@ -14,6 +14,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import springfox.documentation.spring.web.json.Json;
 
 import java.text.SimpleDateFormat;
 import java.util.Optional;
@@ -21,6 +22,8 @@ import java.util.logging.SimpleFormatter;
 
 @Service
 public class AttendanceService implements FDService {
+    private static final int max_state = 4;
+    private static final int min_state = 0;
 
     final static long REPEAT_CHECK = 7200000;//两个小时的时差 7200000ms
 
@@ -35,6 +38,9 @@ public class AttendanceService implements FDService {
     protected final ObjectMapper objectMapper = new ObjectMapper();
 
     public Object create(int worker_id, int state) {
+        if(!Judge.numRangeJ(state,max_state,min_state)){
+            return new JsonMessage(-1,"the state is wrong , please ensure the state");
+        }
         if (workerRepository.findById(worker_id).isPresent()) {
             Worker worker = workerRepository.findById(worker_id).get();
             Attendance repeat = attendanceRepository.findFirstByWorkerIdOrderByDateDesc(worker_id);
@@ -102,7 +108,7 @@ public class AttendanceService implements FDService {
     public boolean isRepeatCheckin(Attendance attendance,int state){
         try {
             long now = System.currentTimeMillis();
-            //小于两个小时，则说明可能重复签到
+            //小于REPEAT_CHECK的值，则说明可能重复签到
             if (now-attendance.getDate()<REPEAT_CHECK&&attendance.getState()==state){
                 return false;
             }

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--套件1-->
+<suite name="Exception" parallel="false">
+    <test name="expectedException">
+        <parameters>
+            <parameter name ="id" value="1"></parameter>
+        </parameters>
+        <classes>
+            <class name="com.xueqi.Intelligent_office.CheckSignTest">
+            </class>
+        </classes>
+    </test>
+
+
+</suite>

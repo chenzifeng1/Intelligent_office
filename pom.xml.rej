@@ -1,0 +1,24 @@
+diff a/pom.xml b/pom.xml	(rejected hunks)
+@@ -123,6 +123,22 @@
+ 			<version>6.8.7</version>
+ 			<scope>test</scope>
+ 		</dependency>
++        <dependency>
++            <groupId>org.seleniumhq.selenium</groupId>
++            <artifactId>selenium-java</artifactId>
++            <version>${selenium.version}</version>
++        </dependency>
++        <dependency>
++            <groupId>org.testng</groupId>
++            <artifactId>testng</artifactId>
++            <version>6.14.2</version>
++        </dependency>
++        <dependency>
++            <groupId>org.junit.jupiter</groupId>
++            <artifactId>junit-jupiter-api</artifactId>
++            <version>5.0.0</version>
++        </dependency>
++
+ 	</dependencies>
+ 
+ 	<build>

@@ -5,7 +5,7 @@
 
 	<groupId>com.2018xueqi</groupId>
 	<artifactId>Intelligent_office</artifactId>
-	<version>0.1.1-SNAPSHOT</version>
+	<version>0.1.2-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
 	<name>Intelligent_office</name>
@@ -22,8 +22,6 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<java.version>1.8</java.version>
-        <testng.version>6.8.7</testng.version>
-        <selenium.version>3.4.0</selenium.version>
 	</properties>
 
 	<dependencies>
@@ -111,32 +109,40 @@
 			<version>2.2.2</version>
 		</dependency>
 
-		<dependency>
-			<groupId>com.tngtech.jgiven</groupId>
-			<artifactId>jgiven-testng</artifactId>
-			<version>0.15.3</version>
-		</dependency>
 
-		<dependency>
-			<groupId>org.testng</groupId>
-			<artifactId>testng</artifactId>
-			<version>6.8.7</version>
-			<scope>test</scope>
-		</dependency>
+
+		<!--<dependency>-->
+			<!--<groupId>org.testng</groupId>-->
+			<!--<artifactId>testng</artifactId>-->
+			<!--<version>6.8.7</version>-->
+			<!--<scope>test</scope>-->
+		<!--</dependency>-->
+        <!--<dependency>-->
+            <!--<groupId>org.seleniumhq.selenium</groupId>-->
+            <!--<artifactId>selenium-java</artifactId>-->
+            <!--<version>${selenium.version}</version>-->
+        <!--</dependency>-->
+        <!--<dependency>-->
+            <!--<groupId>org.testng</groupId>-->
+            <!--<artifactId>testng</artifactId>-->
+            <!--<version>6.14.2</version>-->
+        <!--</dependency>-->
+        <!--<dependency>-->
+            <!--<groupId>org.junit.jupiter</groupId>-->
+            <!--<artifactId>junit-jupiter-api</artifactId>-->
+            <!--<version>5.0.0</version>-->
+        <!--</dependency>-->
+        <!--mockito的特点
+        它既能mock接口也能mock实体类（咱测试框架mock工具也能做到）
+        简单的注解语法-@Mock
+        简单易懂，语法简单
+        支持顺序验证
+        客户化参数匹配器-->
         <dependency>
-            <groupId>org.seleniumhq.selenium</groupId>
-            <artifactId>selenium-java</artifactId>
-            <version>${selenium.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.testng</groupId>
-            <artifactId>testng</artifactId>
-            <version>6.14.2</version>
-        </dependency>
-        <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-api</artifactId>
-            <version>5.0.0</version>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-all</artifactId>
+            <scope>test</scope>
+            <version>1.8.5</version>
         </dependency>
 
 	</dependencies>
@@ -148,29 +154,29 @@
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
             <!--testNG的插件-->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.1</version>
-                <configuration>
-                    <source>1.8</source>
-                    <target>1.8</target>
-                    <encoding>UTF-8</encoding>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <version>2.15</version>
-                <configuration>
-                    <!--<testFailureIgnore>true</testFailureIgnore>-->
-                    <forkMode>never</forkMode>
-                    <argLine>-Dfile.encoding=UTF-8</argLine>
-                    <suiteXmlFiles>
-                        <!--<suiteXmlFile>grouptest</suiteXmlFile>-->
-                    </suiteXmlFiles>
-                </configuration>
-            </plugin>
+            <!--<plugin>-->
+                <!--<groupId>org.apache.maven.plugins</groupId>-->
+                <!--<artifactId>maven-compiler-plugin</artifactId>-->
+                <!--<version>3.1</version>-->
+                <!--<configuration>-->
+                    <!--<source>1.8</source>-->
+                    <!--<target>1.8</target>-->
+                    <!--<encoding>UTF-8</encoding>-->
+                <!--</configuration>-->
+            <!--</plugin>-->
+            <!--<plugin>-->
+                <!--<groupId>org.apache.maven.plugins</groupId>-->
+                <!--<artifactId>maven-surefire-plugin</artifactId>-->
+                <!--<version>2.15</version>-->
+                <!--<configuration>-->
+                    <!--&lt;!&ndash;<testFailureIgnore>true</testFailureIgnore>&ndash;&gt;-->
+                    <!--<forkMode>never</forkMode>-->
+                    <!--<argLine>-Dfile.encoding=UTF-8</argLine>-->
+                    <!--<suiteXmlFiles>-->
+                        <!--<suiteXmlFile>testCheckSign.xml</suiteXmlFile>-->
+                    <!--</suiteXmlFiles>-->
+                <!--</configuration>-->
+            <!--</plugin>-->
         </plugins>
 	</build>
 

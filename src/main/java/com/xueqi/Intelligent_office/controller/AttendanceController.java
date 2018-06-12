@@ -32,6 +32,7 @@ public class AttendanceController {
     public Object sign(Integer workId, Integer state) {
         return attendanceService.create(workId, state);
     }
+
     @GetMapping("/checkDepartment")
     @ApiOperation(value = "查看部门签到记录", notes = "暂时无法按时间查找")
     @ApiImplicitParam(name = "departmentId", value = "部门id", required = true, paramType =  "query",dataType = "Integer")
