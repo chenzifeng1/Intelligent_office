@@ -38,19 +38,19 @@ public class AttendanceService implements FDService {
     protected final ObjectMapper objectMapper = new ObjectMapper();
 
     public Object create(int worker_id, int state) {
-        if(!Judge.numRangeJ(state,max_state,min_state)){
-            return new JsonMessage(-1,"the state is wrong , please ensure the state");
+        if (!Judge.numRangeJ(state, max_state, min_state)) {
+            return new JsonMessage(-1, "the state is wrong , please ensure the state");
         }
         if (workerRepository.findById(worker_id).isPresent()) {
             Worker worker = workerRepository.findById(worker_id).get();
             Attendance repeat = attendanceRepository.findFirstByWorkerIdOrderByDateDesc(worker_id);
-            logger.info("date:"+repeat.getDate());
-            logger.info("state:"+repeat.getState());
-            if (!isRepeatCheckin(repeat,state)){
-                return new JsonMessage(-1,"repeat check-in:"
+            logger.info("date:" + repeat.getDate());
+            logger.info("state:" + repeat.getState());
+            if (!isRepeatCheckin(repeat, state)) {
+                return new JsonMessage(-1, "repeat check-in:"
                         + new SimpleDateFormat("yyyy-MM-dd hh:mm:ss")
-                        .format( repeat.getDate())
-                       );
+                        .format(repeat.getDate())
+                );
             }
             Attendance attendance = new Attendance(
                     worker_id,//签到员工id
@@ -92,31 +92,37 @@ public class AttendanceService implements FDService {
             return new JsonMessage(-1, "workId not find");
     }
 
-    public Object signByName(String name,int state) {
-            try {
-                Worker worker = workerRepository.findFirstByName(name);
-                Attendance attendance = new Attendance(worker.getId(),state,worker.getDepartment_id());
-                return attendanceRepository.save(attendance);
-            }catch (NullPointerException no){
-                no.getCause();
-                return new JsonMessage(-1,"the worker not find");
-            }
+    public Object signByName(String name, int state) {
+        try {
+            Worker worker = workerRepository.findFirstByName(name);
+            Attendance attendance = new Attendance(worker.getId(), state, worker.getDepartment_id());
+            return attendanceRepository.save(attendance);
+        } catch (NullPointerException no) {
+            no.getCause();
+            return new JsonMessage(-1, "the worker not find");
+        }
 
 
     }
 
-    public boolean isRepeatCheckin(Attendance attendance,int state){
+    public Object findFirst(int workId) {
+        if (workerRepository.findById(workId).isPresent())
+            return attendanceRepository.findFirstByWorkerIdOrderByDateDesc(workId);
+        else return null;
+    }
+
+    public boolean isRepeatCheckin(Attendance attendance, int state) {
         try {
             long now = System.currentTimeMillis();
             //小于REPEAT_CHECK的值，则说明可能重复签到
-            if (now-attendance.getDate()<REPEAT_CHECK&&attendance.getState()==state){
+            if (now - attendance.getDate() < REPEAT_CHECK && attendance.getState() == state) {
                 return false;
             }
             return true;
-        }catch (NullPointerException npe){
+        } catch (NullPointerException npe) {
             npe.getCause();
             return false;
-        }catch (Exception e){
+        } catch (Exception e) {
             e.getCause();
             return false;
         }
