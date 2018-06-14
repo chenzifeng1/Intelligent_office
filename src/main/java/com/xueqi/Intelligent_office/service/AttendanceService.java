@@ -43,25 +43,31 @@ public class AttendanceService implements FDService {
         }
         if (workerRepository.findById(worker_id).isPresent()) {
             Worker worker = workerRepository.findById(worker_id).get();
-            Attendance repeat = attendanceRepository.findFirstByWorkerIdOrderByDateDesc(worker_id);
-            logger.info("date:" + repeat.getDate());
-            logger.info("state:" + repeat.getState());
-            if (!isRepeatCheckin(repeat, state)) {
-                return new JsonMessage(-1, "repeat check-in:"
-                        + new SimpleDateFormat("yyyy-MM-dd hh:mm:ss")
-                        .format(repeat.getDate())
+            Attendance repeat = null;
+            try {
+                logger.info("date:" + repeat.getDate());
+                logger.info("state:" + repeat.getState());
+                repeat = attendanceRepository.findFirstByWorkerIdOrderByDateDesc(worker_id);
+            } catch (NullPointerException p) {
+                p.printStackTrace();
+            } finally {
+                if (!isRepeatCheckin(repeat, state)) {
+                    return new JsonMessage(-1, "repeat check-in:"
+                            + new SimpleDateFormat("yyyy-MM-dd hh:mm:ss")
+                            .format(repeat.getDate())
+                    );
+                }
+                Attendance attendance = new Attendance(
+                        worker_id,//签到员工id
+                        state,//签到状态
+                        worker.getDepartment_id()//签到员工所在部门
+                );
+                attendanceRepository.save(attendance);
+                return new AttendanceDto(
+                        attendance,
+                        departmentRepository.findById(attendance.getDepartmentId()).get().getName()
                 );
             }
-            Attendance attendance = new Attendance(
-                    worker_id,//签到员工id
-                    state,//签到状态
-                    worker.getDepartment_id()//签到员工所在部门
-            );
-            attendanceRepository.save(attendance);
-            return new AttendanceDto(
-                    attendance,
-                    departmentRepository.findById(attendance.getDepartmentId()).get().getName()
-            );
         } else
             return new JsonMessage(-1, "the worker is not found !");
     }
@@ -112,6 +118,8 @@ public class AttendanceService implements FDService {
     }
 
     public boolean isRepeatCheckin(Attendance attendance, int state) {
+        if (attendance == null)
+            return true;
         try {
             long now = System.currentTimeMillis();
             //小于REPEAT_CHECK的值，则说明可能重复签到
