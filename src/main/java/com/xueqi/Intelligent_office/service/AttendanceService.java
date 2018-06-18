@@ -114,7 +114,8 @@ public class AttendanceService implements FDService {
     public Object findFirst(int workId) {
         if (workerRepository.findById(workId).isPresent())
             return attendanceRepository.findFirstByWorkerIdOrderByDateDesc(workId);
-        else return null;
+        else
+            return null;
     }
 
     public boolean isRepeatCheckin(Attendance attendance, int state) {

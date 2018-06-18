@@ -70,6 +70,6 @@ public class AttendanceController {
             else
                 return new JsonMessage(0, "these is not attendance in today");
         } else
-            return new JsonMessage(-1, "this worker is not found");
+            return new JsonMessage(-1, "there are no attendances of thi worker ");
     }
 }
