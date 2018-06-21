@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: jdbc:mysql://115.159.71.166:3306/Intelligent_office
+    url: jdbc:mysql://115.159.71.166:3306/Intelligent_office_online
     username: root
     password: root
     test-while-idle: true
