@@ -1,6 +1,4 @@
-package com.xueqi.Intelligent_office.model;
-
-import com.xueqi.Intelligent_office.security.model.User;
+package com.xueqi.Intelligent_office.security.model;
 
 import javax.persistence.*;
 import java.util.List;
