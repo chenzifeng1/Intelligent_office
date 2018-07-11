@@ -1,5 +1,7 @@
 package com.xueqi.Intelligent_office.security.config;
 
+import com.xueqi.Intelligent_office.security.service.JwtAuthenticationEntryPoint;
+import com.xueqi.Intelligent_office.security.service.JwtAuthenticationTokenFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -19,8 +21,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Autowired
-    private JwtAuthenticationEntryPoint unauthorizedHandler;
+//    @Autowired
+//    private JwtAuthenticationEntryPoint unauthorizedHandler;
 
     @Autowired
     private UserDetailsService userDetailsService;
@@ -37,10 +39,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return new BCryptPasswordEncoder();
     }
 
-    @Bean
-    public JwtAuthenticationTokenFilter authenticationTokenFilterBean() throws Exception {
-        return new JwtAuthenticationTokenFilter();
-    }
+//    @Bean
+//    public JwtAuthenticationTokenFilter authenticationTokenFilterBean() throws Exception {
+//        return new JwtAuthenticationTokenFilter();
+//    }
 
 
     @Override
@@ -50,6 +52,5 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests() //需要授权访问的url
                 .anyRequest()
                 .authenticated();
-
     }
 }

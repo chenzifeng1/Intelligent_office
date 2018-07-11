@@ -1,4 +1,4 @@
-package com.xueqi.Intelligent_office.model;
+package com.xueqi.Intelligent_office.security.model;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
