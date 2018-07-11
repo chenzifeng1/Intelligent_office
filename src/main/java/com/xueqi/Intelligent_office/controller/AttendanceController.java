@@ -25,19 +25,24 @@ public class AttendanceController {
     WorkerService workerService;
 
     @PostMapping("/sign")
-    @ApiOperation(value = "员工签到", notes = "")
+    @ApiOperation(value = "员工签到", notes = "员工id和签到状态均要求为int型变量")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "workId", value = "员工id", required = true, paramType = "query", dataType = "Integer"),
-            @ApiImplicitParam(name = "state", value = "签到状态", required = true, paramType = "query", dataType = "Integer")
+            @ApiImplicitParam(name = "workId", value = "员工id", required = true, paramType = "query", dataType = "string"),
+            @ApiImplicitParam(name = "state", value = "签到状态", required = true, paramType = "query", dataType = "string")
     })
-    public Object sign(Integer workId, Integer state) {
-        return attendanceService.create(workId, state);
+    public Object sign(String workId, String  state) {
+        Integer wid = Integer.valueOf(workId);
+        Integer s = Integer.valueOf(state);
+        if (wid<0)
+            return new JsonMessage(-1,"请输入正确的信息");
+        return attendanceService.create(wid, s);
     }
 
     @GetMapping("/checkDepartment")
     @ApiOperation(value = "查看部门签到记录", notes = "暂时无法按时间查找")
     @ApiImplicitParam(name = "departmentId", value = "部门id", required = true, paramType = "query", dataType = "Integer")
     public Object checkDepartment(Integer departmentId) {
+
         return attendanceService.departmentCheck(departmentId);
     }
 

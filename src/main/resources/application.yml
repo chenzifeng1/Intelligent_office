@@ -62,16 +62,16 @@ Properties: # 定义变量
 #      DefaultRolloverStrategy:
 #        max: 1000
 
-Loggers:
-  Root:
-    level: info
-    AppenderRef:
-      - ref: CONSOLE
-      - ref: ROLLING_FILE
-  Logger: # 为com.xjj包配置特殊的Log级别，方便调试
-    - name: com.test.dao
-      additivity: false
-      level: debug
-      AppenderRef:
-        - ref: CONSOLE
-        - ref: ROLLING_FILE
+#Loggers:
+#  Root:
+#    level: info
+#    AppenderRef:
+#      - ref: CONSOLE
+#      - ref: ROLLING_FILE
+#  Logger: # 为com.xjj包配置特殊的Log级别，方便调试
+#    - name: com.test.dao
+#      additivity: false
+#      level: debug
+#      AppenderRef:
+#        - ref: CONSOLE
+#        - ref: ROLLING_FILE
