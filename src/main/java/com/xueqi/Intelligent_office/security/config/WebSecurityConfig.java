@@ -19,10 +19,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 
-//@SuppressWarnings("SpringJavaAutowiringInspection")
-//@Configuration
-//@EnableWebSecurity
-//@EnableGlobalMethodSecurity(prePostEnabled = true)
+@SuppressWarnings("SpringJavaAutowiringInspection")
+@Configuration
+@EnableWebSecurity
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
@@ -52,34 +52,40 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
-
+                // we don't need CSRF because our token is invulnerable
                 .csrf().disable()
 
                 .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
 
+                // don't create session
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
 
                 .authorizeRequests()
-//                .antMatchers(HttpMethod.GET,
-//                        "/",
-//                        "/*.html",
-//                        "/favicon.ico",
-//                        "/**/*.html",
-//                        "/**/*.css",
-//                        "/**/*.js",
-//                        //swagger 例外
-//                        "/webjars/**",
-//                        "/swagger-resources",
-//                        "/v2/api-docs",
-//                        "/configuration/**",
-////                        "/swagger-ui.html",
-//                        "/images/**").permitAll()
-                .antMatchers("/**").permitAll();
-//                .antMatchers("/attendance/*").hasAnyRole("user", "department")
-//                .antMatchers("/department/*").hasRole("department")
-//                .antMatchers("/worker/*").hasAnyRole("department", "admin")
-//                .anyRequest()
-//                .authenticated();
+
+                .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+
+                .and()
+                .authorizeRequests()
+                .antMatchers(HttpMethod.GET,
+                        "/",
+                        "/*.html",
+                        "/favicon.ico",
+                        "/**/*.html",
+                        "/**/*.css",
+                        "/**/*.js",
+                        //swagger 例外
+                        "/webjars/**",
+                        "/swagger-resources",
+                        "/v2/api-docs",
+                        "/configuration/**",
+//                        "/swagger-ui.html",
+                        "/images/**").permitAll()
+
+                .antMatchers("/attendance/*").hasAnyRole("user", "department")
+                .antMatchers("/department/*").hasAnyRole("department")
+                .antMatchers("/worker/*").hasAnyRole("department", "admin")
+                .anyRequest()
+                .authenticated();
 
         // Custom JWT based security filter
         httpSecurity
